@@ -21,7 +21,7 @@ function Home() {
           <Cards />
         </div>
       </div>
-      <p>gggggggggg</p>
+     
     </div>
   );
 }
