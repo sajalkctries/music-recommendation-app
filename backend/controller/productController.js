@@ -1,21 +1,25 @@
-// controllers/productController.js
 import Product from '../models/productModel.js';
 import fs from 'fs';
 import Review from '../models/reviewModel.js';
 
 // Add a new product
 export const addProduct = async (req, res) => {
-    const { name, artist, price, genre, releaseDate, duration, description } = req.body;
     const image_filename = req.file ? `${req.file.filename}` : '';  // Handle image filename
 
+    // Destructure data from req.body
+    const { name, artist, price, genres, releaseYear, duration, description } = req.body;
+
     try {
+        // Check if genres is a string and parse it to an array if necessary
+        const parsedGenres = typeof genres === 'string' ? JSON.parse(genres) : genres;
+
         const product = new Product({
             name,
             artist,
             price,
             image: image_filename,
-            genre,
-            releaseDate,
+            genre: parsedGenres,  // Ensure genres is an array
+            releaseYear,
             duration,
             description,
         });
@@ -23,6 +27,7 @@ export const addProduct = async (req, res) => {
         await product.save();
         res.status(201).json({ message: 'Product added successfully', product });
     } catch (error) {
+        console.error("error:", error);
         res.status(500).json({ message: 'Server Error', error });
     }
 };
@@ -54,5 +59,3 @@ export const deleteProduct = async (req, res) => {
         res.status(500).json({ message: "Server Error", error: error.message });
     }
 };
-
-
