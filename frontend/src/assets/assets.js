@@ -36,8 +36,9 @@ import instagramIcon from "./Images/Instagram.png";
 import appStore from "./Images/app_store.png";
 import playstore from "./Images/play_store.png";
 import adminImage from "./Images/Admin.png"
+import uploadImage from "./Images/uploadImage.png"
 
-export const miscImages = {logo,xIcon,facebookIcon,instagramIcon,appStore,playstore,adminImage};
+export const miscImages = {logo,xIcon,facebookIcon,instagramIcon,appStore,playstore,adminImage,uploadImage};
 
 export const record_list = [
   {
