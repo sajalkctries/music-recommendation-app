@@ -28,9 +28,6 @@ const Product = () => {
           alt={product.name}
           className="w-64 h-64 object-cover rounded-lg shadow-lg"
         />
-<div>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkka
-  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkka
-</div>
         <div>   
           <p className="text-lg font-semibold text-gray-800">Price: Rs {product.price}</p>
           <p className="text-gray-700">{product.description}</p>
