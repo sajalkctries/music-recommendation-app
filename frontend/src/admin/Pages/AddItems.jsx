@@ -25,6 +25,8 @@ function AddItems() {
     { value: "metal", label: "Metal" },
     { value: "indie", label: "Indie" },
     { value: "classic", label: "Classic" },
+    {value:"punk",label:"Punk"},
+    {value:'songwriter',label:'Songwriter'}
   ];
 
   const handleChange = (e) => {
