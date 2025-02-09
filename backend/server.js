@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import { connectDB } from "./config/db.js";
 import productRouter from "./routes/productRoute.js";
 import reviewRouter from "./routes/reviewRoute.js";
+import userRouter from "./routes/userRoute";
 
 dotenv.config(); // Load environment variables
 
@@ -19,7 +20,8 @@ connectDB();
 
 // API Routes
 app.use("/api/products", productRouter);
-app.use("/api/review",reviewRouter)
+app.use("/api/review",reviewRouter);
+app.use("/api/user",userRouter)
 
 app.get("/", (req, res) => {
     res.send("API is working");
