@@ -1,36 +1,44 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { StoreContext } from "../Context/StoreContext";
 
 const Login = () => {
   const url = "http://localhost:4000/api/user";
   const navigate = useNavigate();
+  const {setToken ,setUsername} = useContext(StoreContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    if(email==="admin@gmail.com"&&password==="admin123456789"){
-      navigate("/admin")
+  
+    if (email === "admin@gmail.com" && password === "admin123456789") {
+      navigate("/admin");
+      return;
     }
-
+  
     try {
       const response = await axios.post(`${url}/login`, { email, password });
-
+  
       if (response.data.success) {
-        localStorage.setItem("token", response.data.token); // Store token
-        navigate("/"); // Redirect to home page
+        const { token, username } = response.data; // Make sure the key matches the backend
+        localStorage.setItem("token", token);
+        localStorage.setItem("username", username); // Store username correctly
+        setToken(token);
+        setUsername(username);
+        navigate("/");
       } else {
-        setError(response.data.message); // Show error message
+        setError(response.data.message);
       }
     } catch (error) {
       console.error("Login error:", error);
-      console.log(email,password)
       setError("Something went wrong. Please try again.");
     }
   };
+  
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-[#5c7c89]">
@@ -61,12 +69,12 @@ const Login = () => {
           <span className="text-xs text-blue-950 underline cursor-pointer">
             <NavLink to="/register">Dont have an account? Click to Register</NavLink>
           </span>
-          <button
+         {<button
             type="submit"
             className="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 mt-4"
           >
             Login
-          </button>
+          </button>}
         </form>
       </div>
     </div>

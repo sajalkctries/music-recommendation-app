@@ -55,23 +55,23 @@ const registerUser = async (req, res) => {
 
 // Login user (implement logic)
 const loginUser = async (req, res) => {
-    const {email,password} = req.body;
-    try{
-        const user = await User.findOne({email});
-        if(!user){
-            return res.json({success:false,message:"user doesnt exist"});
+    const { email, password } = req.body;
+    try {
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.json({ success: false, message: "User doesn't exist" });
         }
-        const isMatch = await bcrypt.compare(password,user.password);
-        if(!isMatch){
-            return res.json({success:false,message:"Password doesnt match"});
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.json({ success: false, message: "Password doesn't match" });
         }
 
         const token = createToken(user._id);
-        res.json({success:true,token});
-    }catch(error){
+        res.json({ success: true, token, username: user.name }); // Include username in response
+    } catch (error) {
         console.log(error);
-        return res.json({success:false,message:"error"});
+        return res.json({ success: false, message: "Error" });
     }
-}
+};
 
 export { loginUser, registerUser };
