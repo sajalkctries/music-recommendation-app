@@ -6,6 +6,8 @@ import { connectDB } from "./config/db.js";
 import productRouter from "./routes/productRoute.js";
 import reviewRouter from "./routes/reviewRoute.js";
 import userRouter from "./routes/userRoute.js";
+import cartRouter from "./routes/cartRoute.js";
+import { placeOrder } from "./controller/orderController.js";
 
 dotenv.config(); // Load environment variables
 
@@ -28,6 +30,8 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/products", productRouter);
 app.use("/api/review", reviewRouter);
 app.use("/api/user", userRouter);
+app.use("/api/cart",cartRouter);
+app.use("/api/order",placeOrder)
 
 app.get("/", (req, res) => {
     res.send("API is working");

@@ -2,6 +2,8 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { StoreContext } from "../Components/Context/StoreContext";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Product = () => {
   const { id } = useParams();
@@ -9,14 +11,13 @@ const Product = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const {setCart} = useContext(StoreContext) ;
+  const { addToCart } = useContext(StoreContext);
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(`http://localhost:4000/api/products/${id}`);
         setProduct(response.data);
-       
       } catch (err) {
         console.error("Error fetching product:", err);
         setError("Failed to load product details.");
@@ -28,14 +29,22 @@ const Product = () => {
     fetchProduct();
   }, [id]);
 
+  const handleAddToCart = () => {
+    addToCart(id);
+    toast.success("Added to cart! 🛒", {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      theme: "colored",
+    });
+  };
+
   if (loading) return <div className="text-center text-xl mt-10">Loading...</div>;
   if (error) return <div className="text-center text-xl mt-10 text-red-500">{error}</div>;
   if (!product) return <div className="text-center text-xl mt-10">Product not found.</div>;
-
-  const addToCart = () => {
-    setCart((prevCart) => [...prevCart, product]);
-    alert(`${product.name} added to cart!`);
-  };
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-2xl">
@@ -72,7 +81,7 @@ const Product = () => {
           </div>
 
           <button
-            onClick={addToCart}
+            onClick={handleAddToCart}
             className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-700 transition"
           >
             Add to Cart 🛒

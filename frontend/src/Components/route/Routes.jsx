@@ -12,6 +12,8 @@ import AddItems from "../../admin/Pages/addItems";
 import OrderList from "../../admin/Pages/orderList";
 import ProductList from "../../admin/Pages/productList";
 import AdminNavbar from "../../admin/AdminNavbar";
+import Cart from "../../Pages/Cart";
+import PlaceOrder from "../../Pages/PlaceOrder";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +27,8 @@ const router = createBrowserRouter([
     ),
     children: [
       { path: "/", element: <Home /> },
+      {path:"/cart",element:<Cart/>},
+      {path:"/order",element:<PlaceOrder/>},
       { path: "/product/:id", element: <Product /> },
       { path: "/about", element: <About /> },
       { path: "/personalisation", element: <Personalisation /> },
