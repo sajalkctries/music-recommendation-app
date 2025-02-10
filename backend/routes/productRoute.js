@@ -1,7 +1,7 @@
 // routes/productRoute.js
 import express from 'express';
 import multer from 'multer';
-import { addProduct, getProducts } from '../controller/productController.js';
+import { addProduct, getProducts,getProductById } from '../controller/productController.js';
 
 const productRouter = express.Router();
 
@@ -17,5 +17,6 @@ const upload = multer({ storage });
 
 productRouter.post('/add', upload.single('image'), addProduct);
 productRouter.get('/list', getProducts);
+productRouter.get('/:id', getProductById);
 
 export default productRouter;

@@ -1,20 +1,34 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { record_list } from "../../assets/assets";
+import axios from "axios";
 import Card from "./Card";
 
 function Cards() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get("http://localhost:4000/api/products/list");
+        setData(response.data); // Update state with fetched data
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   return (
     <div className="grid place-items-center sm:grid-cols-2 lg:grid-cols-3 gap-5 md:px-10">
-      {record_list.map((item) => (
+      {data.map((item) => (
         <Link key={item._id} to={`/product/${item._id}`}>
           <Card
-            key={item._id}
             _id={item._id}
             name={item.name}
             artist={item.artist}
             image={item.image}
             price={item.price}
-            // description={item.description}
             genre={item.genre}
             releaseDate={item.releaseDate}
             duration={item.duration}

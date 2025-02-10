@@ -1,24 +1,44 @@
 import { useParams } from "react-router-dom";
-import { record_list } from "../assets/assets";
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
+import axios from "axios";
+import { StoreContext } from "../Components/Context/StoreContext";
 
 const Product = () => {
   const { id } = useParams();
-  const product = record_list.find((item) => item._id === id);
-  const [cart, setCart] = useState([]);
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  if (!product) {
-    return <div className="text-center text-xl mt-10">Product not found.</div>;
-  }
+  const {setCart} = useContext(StoreContext) ;
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await axios.get(`http://localhost:4000/api/products/${id}`);
+        setProduct(response.data);
+       
+      } catch (err) {
+        console.error("Error fetching product:", err);
+        setError("Failed to load product details.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
+
+  if (loading) return <div className="text-center text-xl mt-10">Loading...</div>;
+  if (error) return <div className="text-center text-xl mt-10 text-red-500">{error}</div>;
+  if (!product) return <div className="text-center text-xl mt-10">Product not found.</div>;
 
   const addToCart = () => {
     setCart((prevCart) => [...prevCart, product]);
     alert(`${product.name} added to cart!`);
   };
 
-  console.log(cart)
   return (
-    <div className="max-w-4xl mx-auto p-6  bg-white rounded-2xl">
+    <div className="max-w-4xl mx-auto p-6 bg-white rounded-2xl">
       <h1 className="text-3xl font-bold">{product.name}</h1>
       <h2 className="text-xl text-gray-600">by {product.artist}</h2>
 
@@ -28,11 +48,11 @@ const Product = () => {
           alt={product.name}
           className="w-64 h-64 object-cover rounded-lg shadow-lg"
         />
-        <div>   
+        <div>
           <p className="text-lg font-semibold text-gray-800">Price: Rs {product.price}</p>
           <p className="text-gray-700">{product.description}</p>
           <p className="mt-2 text-sm text-gray-600">
-            <strong>Release Date:</strong> {product.releaseDate} <br />
+            <strong>Release Date:</strong> {product.releaseYear} <br />
             <strong>Duration:</strong> {product.duration} mins
           </p>
 
@@ -51,7 +71,6 @@ const Product = () => {
             </p>
           </div>
 
-          {/* Add to Cart Button */}
           <button
             onClick={addToCart}
             className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-700 transition"
