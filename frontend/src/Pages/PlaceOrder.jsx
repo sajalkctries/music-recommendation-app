@@ -1,7 +1,8 @@
 import { useState, useContext } from "react";
 import axios from "axios";
 import { StoreContext } from "../Components/Context/StoreContext";
-import Autocomplete from "react-google-autocomplete";
+
+
 
 const BACKEND_URL = "http://localhost:5000/api/order/place";
 
@@ -56,12 +57,7 @@ function PlaceOrder() {
 
       {/* Address Input with Google Maps Autocomplete */}
       <label className="block font-medium mb-1">Delivery Address</label>
-      <Autocomplete
-        apiKey="api_key" // Replace with your actual API key
-        onPlaceSelected={(place) => setAddress(place.formatted_address)}
-        className="w-full p-2 border rounded-md mb-4"
-        options={{ types: ["geocode"] }}
-      />
+      <input type="text" className="border-2 border-black" onChange={(e)=>setAddress(e.target.value)} />
 
       <h3 className="font-semibold mb-2">Order Summary</h3>
       <ul className="border p-3 rounded-md mb-4">
