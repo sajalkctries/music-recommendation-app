@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import axios from "axios";
 
 
+
 export const StoreContext = createContext(null);
 const url = "http://localhost:4000";
 
@@ -50,6 +51,7 @@ const StoreContextProvider = ({ children }) => {
       console.error("Error fetching cart:", error);
     }
   };
+
 
   // Add item to cart
   const addToCart = async (itemId) => {

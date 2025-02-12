@@ -14,18 +14,20 @@ const Product = () => {
   const [showAddReview, setShowAddReview] = useState(false);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
-  const[reviews,setReviews] = useState([])
+  const [reviews, setReviews] = useState([]);
 
   const { addToCart, token } = useContext(StoreContext);
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/api/products/${id}`);
+        const response = await axios.get(
+          `http://localhost:4000/api/products/${id}`
+        );
         setProduct(response.data);
-        console.log(product)
+        console.log(product);
       } catch (err) {
-        setError("Failed to load product details.",err);
+        setError("Failed to load product details.", err);
       } finally {
         setLoading(false);
       }
@@ -37,14 +39,18 @@ const Product = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/api/review/product/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,  // Ensure token is sent
-          },
-        });
+        const response = await fetch(
+          `http://localhost:4000/api/review/product/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // Ensure token is sent
+            },
+          }
+        );
         const data = await response.json();
 
-        if (!response.ok) throw new Error(data.message || "Failed to fetch reviews");
+        if (!response.ok)
+          throw new Error(data.message || "Failed to fetch reviews");
 
         setReviews(Array.isArray(data.reviews) ? data.reviews : []); // Ensure it's always an array
       } catch (err) {
@@ -60,38 +66,42 @@ const Product = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!token) {
-        toast.error("You must be logged in to submit a review.");
-        return;
+      toast.error("You must be logged in to submit a review.");
+      return;
     }
 
     const parsedRating = parseInt(rating);
 
     if (isNaN(parsedRating) || parsedRating < 1 || parsedRating > 5) {
-        toast.error("Rating must be a number between 1 and 5.");
-        return;
+      toast.error("Rating must be a number between 1 and 5.");
+      return;
     }
 
     try {
-        const response = await axios.post(
-            "http://localhost:4000/api/review/add",
-            { productId: id, rating: parsedRating, comment: review },
-            { headers: { Authorization: `Bearer ${token}` } }
-        );
+      const response = await axios.post(
+        "http://localhost:4000/api/review/add",
+        { productId: id, rating: parsedRating, comment: review },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
 
-        // Update the product reviews after submission
-        setReviews((prev) => [...prev, response.data.review]);
+      // Update the product reviews after submission
+      setReviews((prev) => [...prev, response.data.review]);
 
-        toast.success("Review added successfully!");
-        setShowAddReview(false);
+      toast.success("Review added successfully!");
+      setShowAddReview(false);
     } catch (err) {
-        toast.error(err.response?.data?.message || "Failed to add review.");
+      toast.error(err.response?.data?.message || "Failed to add review.");
     }
-};
+  };
 
-
-  if (loading) return <div className="text-center text-xl mt-10">Loading...</div>;
-  if (error) return <div className="text-center text-xl mt-10 text-red-500">{error}</div>;
-  if (!product) return <div className="text-center text-xl mt-10">Product not found.</div>;
+  if (loading)
+    return <div className="text-center text-xl mt-10">Loading...</div>;
+  if (error)
+    return (
+      <div className="text-center text-xl mt-10 text-red-500">{error}</div>
+    );
+  if (!product)
+    return <div className="text-center text-xl mt-10">Product not found.</div>;
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-2xl">
@@ -105,7 +115,9 @@ const Product = () => {
           className="w-64 h-64 object-cover rounded-lg shadow-lg"
         />
         <div>
-          <p className="text-lg font-semibold text-gray-800">Price: Rs {product.price}</p>
+          <p className="text-lg font-semibold text-gray-800">
+            Price: Rs {product.price}
+          </p>
           <p className="text-gray-700">{product.description}</p>
 
           <p className="mt-2 text-sm text-gray-600">
@@ -115,12 +127,16 @@ const Product = () => {
 
           <div className="mt-4">
             <p className="text-lg">
-              ⭐ {product.rating.toFixed(1)} / 5 ({product.numberOfRatings} reviews)
+              ⭐ {product.rating.toFixed(1)} / 5 ({product.numberOfRatings}{" "}
+              reviews)
             </p>
           </div>
 
           <button
-            onClick={() => addToCart(id)}
+            onClick={() => {
+              addToCart(id);
+              toast.success("Product Added to Cart");
+            }}
             className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-700 transition"
           >
             Add to Cart 🛒
@@ -140,7 +156,10 @@ const Product = () => {
         )}
 
         {showAddReview && (
-          <form className="shadow-2xl p-4 mt-4 bg-gray-100 rounded-lg" onSubmit={handleSubmit}>
+          <form
+            className="shadow-2xl p-4 mt-4 bg-gray-100 rounded-lg"
+            onSubmit={handleSubmit}
+          >
             <div className="flex flex-col gap-3">
               <StarRating onChange={(rate) => setRating(rate)} />
               <textarea
@@ -149,7 +168,10 @@ const Product = () => {
                 onChange={(e) => setReview(e.target.value)}
               />
             </div>
-            <button type="submit" className="bg-green-500 border-2 border-gray-800 rounded-2xl p-2 mt-2">
+            <button
+              type="submit"
+              className="bg-green-500 border-2 border-gray-800 rounded-2xl p-2 mt-2"
+            >
               Submit
             </button>
           </form>
@@ -160,9 +182,15 @@ const Product = () => {
           <ul className="mt-4">
             {reviews.map((rev, index) => (
               <li key={index} className="border-b py-3">
-                <p className="font-semibold">{rev.userId?.name || "Anonymous"}</p> {/* Fallback for missing user info */}
+                <p className="font-semibold">
+                  {rev.userId?.name || "Anonymous"}
+                </p>{" "}
+                {/* Fallback for missing user info */}
                 <p>⭐ {rev.rating} / 5</p>
-                <p className="text-gray-700">{rev.comment || "No comment provided."}</p> {/* Fallback for missing comment */}
+                <p className="text-gray-700">
+                  {rev.comment || "No comment provided."}
+                </p>{" "}
+                {/* Fallback for missing comment */}
               </li>
             ))}
           </ul>
