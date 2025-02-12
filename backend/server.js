@@ -7,7 +7,7 @@ import productRouter from "./routes/productRoute.js";
 import reviewRouter from "./routes/reviewRoute.js";
 import userRouter from "./routes/userRoute.js";
 import cartRouter from "./routes/cartRoute.js";
-import { placeOrder } from "./controller/orderController.js";
+import orderRouter from "./routes/orderRoute.js";
 
 dotenv.config(); // Load environment variables
 
@@ -31,7 +31,8 @@ app.use("/api/products", productRouter);
 app.use("/api/review", reviewRouter);
 app.use("/api/user", userRouter);
 app.use("/api/cart",cartRouter);
-app.use("/api/order",placeOrder)
+app.use("/api/order",orderRouter);
+
 
 app.get("/", (req, res) => {
     res.send("API is working");

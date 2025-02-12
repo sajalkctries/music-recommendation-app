@@ -43,6 +43,7 @@ export const getProducts = async (req, res) => {
             image: product.image ? `http://localhost:4000/uploads/${product.image}` : "",
         }));
 
+
         res.status(200).json(updatedProducts);
     } catch (error) {
         res.status(500).json({ message: 'Server Error', error });
