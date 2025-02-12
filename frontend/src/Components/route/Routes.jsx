@@ -10,7 +10,7 @@ import Product from "../../Pages/Product";
 import Sidebar from "../../admin/Sidebar";
 import AddItems from "../../admin/Pages/addItems";
 import OrderList from "../../admin/Pages/orderList";
-import ProductList from "../../admin/Pages/productList";
+import ProductList from "../../admin/Pages/ProductList";
 import AdminNavbar from "../../admin/AdminNavbar";
 import Cart from "../../Pages/Cart";
 import PlaceOrder from "../../Pages/PlaceOrder";

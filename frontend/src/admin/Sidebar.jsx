@@ -7,7 +7,7 @@ function Sidebar() {
 
   return (
     <div
-      className={`h-screen border-r border-black transition-all duration-[800ms] ease-in-out ${
+      className={`h-auto border-r border-black transition-all duration-[800ms] ease-in-out ${
         isOpen ? "w-48" : "w-20"
       }`}
     >
