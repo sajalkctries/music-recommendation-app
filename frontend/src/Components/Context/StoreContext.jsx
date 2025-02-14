@@ -28,16 +28,18 @@ const StoreContextProvider = ({ children }) => {
   // Fetch cart from backend
   const fetchCart = async () => {
     if (!token) return;
-
+  
     try {
-      const response = await axios.post(`${url}/api/cart/fetch`, { headers: { token } });
+      const response = await axios.get(`${url}/api/cart/fetch`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
       const cartData = response.data.cartData || {};
-
+  
       const updatedCart = {};
       for (const itemId in cartData) {
         const productResponse = await axios.get(`${url}/api/products/${itemId}`);
         const product = productResponse.data;
-
+  
         updatedCart[itemId] = {
           image: product.image,
           name: product.name,
@@ -45,21 +47,20 @@ const StoreContextProvider = ({ children }) => {
           quantity: cartData[itemId],
         };
       }
-
+  
       setCart(updatedCart);
     } catch (error) {
       console.error("Error fetching cart:", error);
     }
   };
-
-
+  
   // Add item to cart
   const addToCart = async (itemId) => {
     try {
       // Fetch product details
       const response = await axios.get(`${url}/api/products/${itemId}`);
       const product = response.data;
-
+  
       // Update local cart state
       setCart((prev) => {
         const existingItem = prev[itemId] || { name: product.name, price: product.price, image: product.image, quantity: 0 };
@@ -68,16 +69,18 @@ const StoreContextProvider = ({ children }) => {
           [itemId]: { ...existingItem, quantity: existingItem.quantity + 1 },
         };
       });
-
-      // Update cart in the backend if the user is authenticated
+  
+      // Update cart in the backend
       if (token) {
-        await axios.post(`${url}/api/cart/add`, { userId: username, itemId }, { headers: { token } });
+        await axios.post(`${url}/api/cart/add`, { itemId }, { 
+          headers: { Authorization: `Bearer ${token}` } 
+        });
       }
     } catch (error) {
       console.error("Error adding to cart:", error);
     }
   };
-
+  
   // Remove item from cart
   const removeFromCart = async (itemId) => {
     try {
@@ -87,15 +90,18 @@ const StoreContextProvider = ({ children }) => {
         delete newCart[itemId];
         return newCart;
       });
-
-      // Update cart in the backend if the user is authenticated
+  
+      // Update cart in the backend
       if (token) {
-        await axios.post(`${url}/api/cart/remove`, { userId: username, itemId }, { headers: { token } });
+        await axios.post(`${url}/api/cart/remove`, { itemId }, { 
+          headers: { Authorization: `Bearer ${token}` } 
+        });
       }
     } catch (error) {
       console.error("Error removing from cart:", error);
     }
   };
+  
 
   // Context value to be provided to components
   const contextValue = {
