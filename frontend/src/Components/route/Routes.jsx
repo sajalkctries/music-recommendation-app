@@ -1,4 +1,9 @@
-import { Link, Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  Link,
+  Outlet,
+  RouterProvider,
+  createBrowserRouter,
+} from "react-router-dom";
 import Home from "../../Pages/Home";
 import About from "../../Pages/About";
 import Personalisation from "../../Pages/Personalisation";
@@ -15,6 +20,7 @@ import AdminNavbar from "../../admin/AdminNavbar";
 import Cart from "../../Pages/Cart";
 import PlaceOrder from "../../Pages/PlaceOrder";
 import UserOrder from "../../Pages/UserOrder";
+import Protected from "../Protected";
 
 const router = createBrowserRouter([
   {
@@ -28,14 +34,42 @@ const router = createBrowserRouter([
     ),
     children: [
       { path: "/", element: <Home /> },
-      {path:'paymentsuccess',element:<div className="text-center text-5xl">Payment Success✅</div>},
-      {path:"/cart",element:<Cart/>},
-      {path:"/order",element:<PlaceOrder/>},
-      {path:"/userorder",element:<UserOrder/>},
+      {
+        path: "paymentsuccess",
+        element: <div className="text-center text-5xl">Payment Success✅</div>,
+      },
+      {
+        path: "/cart",
+        element: (
+          <>
+            <Protected>
+              <Cart />
+            </Protected>
+          </>
+        ),
+      },
+      {
+        path: "/order",
+        element: (
+          <>
+            <Protected>
+              <PlaceOrder />
+            </Protected>
+          </>
+        ),
+      },
+      { path: "/userorder", element: <UserOrder /> },
       { path: "/product/:id", element: <Product /> },
       { path: "/about", element: <About /> },
       { path: "/personalisation", element: <Personalisation /> },
-      { path: "*", element: <Link to={"/"} className="text-blue-900">Not Found</Link> },
+      {
+        path: "*",
+        element: (
+          <Link to={"/"} className="text-blue-900">
+            Not Found
+          </Link>
+        ),
+      },
     ],
   },
   { path: "/login", element: <Login /> },
