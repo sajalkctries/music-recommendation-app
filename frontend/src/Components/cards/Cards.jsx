@@ -10,7 +10,6 @@ function Cards() {
     const fetchProducts = async () => {
       try {
         const response = await axios.get("http://localhost:4000/api/products/list");
-        console.log("API Response:", response.data); // Debugging
         setData(response.data);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -23,7 +22,6 @@ function Cards() {
 if(!data){
   return <div>Server Down</div>
 }
-console.log(data.numberOfRatings)
   return (
     <div className="grid place-items-center sm:grid-cols-2 lg:grid-cols-3 gap-5 md:px-10">
       {data.map((item) => (
