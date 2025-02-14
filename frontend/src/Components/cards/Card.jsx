@@ -12,7 +12,6 @@ function Card({
   rating,
   numberOfRatings,
 }) {
-
   return (
     <div
       className="hover:shadow-2xl bg-[#ffffff] rounded-2xl cursor-pointer flex flex-col gap-1.5 w-80 px-4 py-1 items-center border-2 border-gray-200 transition-transform duration-200 ease-in-out hover:scale-105"
