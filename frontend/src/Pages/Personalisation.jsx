@@ -22,7 +22,18 @@ function Personalisation() {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        setRecommendedProducts(response.data);
+
+        console.log("API Response:", response.data); // Debugging
+
+        // Ensure response.data is an array before setting state
+        if (Array.isArray(response.data)) {
+          setRecommendedProducts(response.data);
+        } else if (response.data && Array.isArray(response.data.recommended)) {
+          setRecommendedProducts(response.data.recommended);
+        } else {
+          setRecommendedProducts([]);
+          setError("Rate the products first to get recommendation.");
+        }
       } catch (error) {
         setError(error.response?.data?.message || "Failed to fetch recommendations");
       } finally {
@@ -32,11 +43,13 @@ function Personalisation() {
 
     fetchRecommendations();
   }, [token]);
-  console.log(recommendedProducts)
 
-  if(!token) return <p className="text-center">Login first and rate to get recommendations</p>
+  if (!token)
+    return <p className="text-center">Login first and rate to get recommendations</p>;
+
   if (loading) return <p className="text-center">Loading recommendations...</p>;
-  if (error) return <p className="text-red-500 text-center">{error}</p>;
+
+  if (error) return <p className="text-3xl text-center">{error}</p>;
 
   return (
     <div className="p-6">
@@ -47,23 +60,24 @@ function Personalisation() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {recommendedProducts.map((item) => (
             <Link key={item._id} to={`/product/${item._id}`}>
-            <Card
-              _id={item._id}
-              name={item.name}
-              artist={item.artist}
-              image={"http://localhost:4000/uploads/"+item.image}
-              price={item.price}
-              genre={item.genre}
-              releaseYear={item.releaseYear}
-              duration={item.duration}
-              rating={item.rating}
-              numberOfRatings={item.numberOfRatings}
-            />
-          </Link>
+              <Card
+                _id={item._id}
+                name={item.name}
+                artist={item.artist}
+                image={`http://localhost:4000/uploads/${item.image}`}
+                price={item.price}
+                genre={item.genre}
+                releaseYear={item.releaseYear}
+                duration={item.duration}
+                rating={item.rating}
+                numberOfRatings={item.numberOfRatings}
+              />
+            </Link>
           ))}
         </div>
       )}
     </div>
   );
 }
+
 export default Personalisation;

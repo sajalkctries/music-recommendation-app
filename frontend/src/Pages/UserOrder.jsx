@@ -15,7 +15,7 @@ function UserOrder() {
   const fetchOrders = async () => {
     try {
       const response = await axios.get(BACKEND_URL, { headers: { token } });
-     
+
       if (response.data.success) {
         setOrders(response.data.orders);
         console.log(response.data.orders);
@@ -35,21 +35,44 @@ function UserOrder() {
           {orders.map((order) => (
             <li key={order._id} className="py-4">
               <div>
-                <p className="text-gray-500">Placed on: {new Date(order.Date).toLocaleString()}</p>
+                <p className="text-gray-500">
+                  Placed on:{" "}
+                  {new Date(order.date).toLocaleString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    second: "2-digit",
+                    hour12: true,
+                  })}
+                </p>
                 <p className="text-gray-500">Delivery Status: {order.status}</p>
-                <p className="font-medium text-lg mt-2">Shipping Address: {order.address}</p>
+                <p className="font-medium text-lg mt-2">
+                  Shipping Address: {order.address}
+                </p>
                 <p className="text-gray-500">Phone: {order.phone}</p>
                 <p className="mt-2 font-semibold">Items:</p>
                 <ul className="list-disc ml-5">
                   {order.items.map((item, index) => (
                     <li key={index} className="flex justify-between">
                       <span>{item.name}</span>
-                      <span>Rs {item.price} x {item.quantity}</span>
+                      <span>
+                        Rs {item.price} x {item.quantity}
+                      </span>
                     </li>
                   ))}
                 </ul>
-                <p className="mt-2 font-semibold">Total Amount: Rs {order.amount}</p>
-                <p className="mt-2 text-green-600">Payment Status: {order.Payment ? 'Paid' : 'Pending'}</p>
+                <p className="mt-2 font-semibold">
+                  Delivery Charge: Rs 50
+                </p>
+                <p className="mt-2 font-semibold">
+                  Total Amount: Rs {order.amount}
+                </p>
+                <p className="mt-2 text-green-600">
+                  Payment Status: Paid
+                </p>
+
               </div>
             </li>
           ))}

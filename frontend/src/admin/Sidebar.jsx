@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaBox, FaList, FaClipboardList, FaBars } from "react-icons/fa";
+import { FaBox, FaList, FaClipboardList, FaAngleDoubleRight } from "react-icons/fa";
 
 function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,9 +12,9 @@ function Sidebar() {
       }`}
     >
       {/* Toggle Button */}
-      <div className="flex justify-end p-2 absolute left-2 text-teal-50">
+      <div className={`flex p-2 absolute left-12 text-teal-50 transition-all duration-[800ms] ease-in-out ${isOpen?"left-36":""}`}>
         <button onClick={() => setIsOpen(!isOpen)}>
-          <FaBars className="text-xl" />
+          <FaAngleDoubleRight className={`text-2xl transition-all duration-[800ms] ease-in-out ${isOpen?"rotate-180":""}`} />
         </button>
       </div>
 
