@@ -1,47 +1,45 @@
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import eye icons
 
 const Register = () => {
-  const url = "http://localhost:4000/api/user"; // Adjust this if your backend route differs
+  const url = "http://localhost:4000/api/user";
   const navigate = useNavigate();
-  const [name, setName] = useState(""); // Changed from username to name
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
 
-    if(name==="admin"){
-      setError("username cant be admin");
+    if (name === "admin") {
+      setError("Username can't be admin");
       return;
     }
-
     if (!name || !email || !password || !confirmPassword) {
       setError("Please fill in all fields");
       return;
     }
-
+    if(password.length<8){
+      setError("Password Should be at least 8 characters long")
+    }
     if (password !== confirmPassword) {
       setError("Passwords do not match");
       return;
     }
-
     try {
-      const response = await axios.post(`${url}/register`, {
-        name, // Matches the backend's expected field
-        email,
-        password,
-      });
-
+      const response = await axios.post(`${url}/register`, { name, email, password });
       if (response.data.success) {
         setSuccess("Registration successful!");
-        navigate("/login")
+        navigate("/login");
         setName("");
         setEmail("");
         setPassword("");
@@ -62,53 +60,35 @@ const Register = () => {
         {success && <div className="text-green-500 mb-2">{success}</div>}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="name" className="block mb-2">Name</label>
-            <input
-              type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your name"
-            />
+            <label className="block mb-2">Name</label>
+            <input type="text" value={name} onChange={(e) => setName(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" placeholder="Enter your name" />
           </div>
           <div>
-            <label htmlFor="email" className="block mb-2">Email</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your email"
-            />
+            <label className="block mb-2">Email</label>
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" placeholder="Enter your email" />
           </div>
-          <div>
-            <label htmlFor="password" className="block mb-2">Password</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your password"
-            />
+          <div className="relative">
+            <label className="block mb-2">Password</label>
+            <input type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" placeholder="Enter your password" />
+            <button type="button" onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-10 text-gray-600">
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
           </div>
-          <div>
-            <label htmlFor="confirmPassword" className="block mb-2">Confirm Password</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Confirm your password"
-            />
+          <div className="relative">
+            <label className="block mb-2">Confirm Password</label>
+            <input type={showConfirmPassword ? "text" : "password"} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" placeholder="Confirm your password" />
+            <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute right-3 top-10 text-gray-600">
+              {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
           </div>
-          <button
-            type="submit"
-            className="w-full p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none"
-          >
+          <Link to="/login" className="text-blue-950 underline text-xs">Already have an account? click here</Link>
+          <button type="submit" className="w-full p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none">
             Register
           </button>
         </form>
