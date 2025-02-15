@@ -39,6 +39,15 @@ const router = createBrowserRouter([
         element: <div className="text-center text-5xl">Payment Success✅</div>,
       },
       {
+        path: "paymentfailure",
+        element: (
+          <div className="text-center text-5xl">
+            <p>Payment Failed❌</p>
+            <Link to={"/order"} ><span className="hover:text-blue-950">Try Again</span></Link>
+          </div>
+        ),
+      },
+      {
         path: "/cart",
         element: (
           <>
