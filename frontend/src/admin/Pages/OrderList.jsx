@@ -64,6 +64,7 @@ function OrderList() {
               <th className="px-4 py-2 text-left">Phone</th>
               <th className="px-4 py-2 text-left">Username</th>
               <th className="px-4 py-2 text-left">Total</th>
+              <th className="px-4 py-2 text-left">Address</th>
               <th className="px-4 py-2 text-left">Status</th>
               <th className="px-4 py-2 text-left">Actions</th>
             </tr>
@@ -74,6 +75,7 @@ function OrderList() {
                 <td className="px-4 py-2">{order.phone}</td>
                 <td className="px-4 py-2">{order.userId.name}</td> {/* Accessing userId.username */}
                 <td className="px-4 py-2">Rs {order.amount}</td>
+                <td className="px-4 py-2">{order.address}</td>
                 <td className="px-4 py-2">
                   <select
                     value={order.status}

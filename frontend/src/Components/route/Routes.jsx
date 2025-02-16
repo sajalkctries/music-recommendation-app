@@ -21,6 +21,7 @@ import Cart from "../../Pages/Cart";
 import PlaceOrder from "../../Pages/PlaceOrder";
 import UserOrder from "../../Pages/UserOrder";
 import Protected from "../Protected";
+import PaymentSuccess from "../../Pages/PaymentSuccess";
 
 const router = createBrowserRouter([
   {
@@ -36,7 +37,7 @@ const router = createBrowserRouter([
       { path: "/", element: <Home /> },
       {
         path: "paymentsuccess",
-        element: <div className="text-center text-5xl">Payment Success✅</div>,
+        element: <PaymentSuccess/>
       },
       {
         path: "paymentfailure",
