@@ -124,7 +124,7 @@ const recommendedProduct = async (req, res) => {
         // Sort by similarity score and return top 5
         const recommended = scoredProducts
             .sort((a, b) => b.similarityScore - a.similarityScore)
-            .slice(0, 5);
+            .slice(0, 6);
 
         res.json(recommended);
     } catch (error) {
