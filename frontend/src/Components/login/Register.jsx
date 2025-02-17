@@ -30,7 +30,12 @@ const Register = () => {
     }
     if(password.length<8){
       setError("Password Should be at least 8 characters long")
+      return;
     }
+    if (/\d/.test(name)) {
+      setError("Name cannot contain numbers");
+      return;
+  }
     if (password !== confirmPassword) {
       setError("Passwords do not match");
       return;
@@ -62,17 +67,17 @@ const Register = () => {
           <div>
             <label className="block mb-2">Name</label>
             <input type="text" value={name} onChange={(e) => setName(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" placeholder="Enter your name" />
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" placeholder="Enter your name" required />
           </div>
           <div>
             <label className="block mb-2">Email</label>
             <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" placeholder="Enter your email" />
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" placeholder="Enter your email" required />
           </div>
           <div className="relative">
             <label className="block mb-2">Password</label>
             <input type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" placeholder="Enter your password" />
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" placeholder="Enter your password" required/>
             <button type="button" onClick={() => setShowPassword(!showPassword)}
               className="absolute right-3 top-10 text-gray-600">
               {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -81,7 +86,7 @@ const Register = () => {
           <div className="relative">
             <label className="block mb-2">Confirm Password</label>
             <input type={showConfirmPassword ? "text" : "password"} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" placeholder="Confirm your password" />
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" placeholder="Confirm your password" required/>
             <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               className="absolute right-3 top-10 text-gray-600">
               {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}

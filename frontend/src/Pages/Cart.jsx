@@ -8,6 +8,7 @@ function Cart() {
 
   // Calculate total price
   const totalPrice = Object.values(cart).reduce((sum, item) => sum + item.price * item.quantity, 0);
+  console.log("cart",cart)
 
   return (
     <div className="w-90 mx-auto p-6 bg-white rounded-2xl">

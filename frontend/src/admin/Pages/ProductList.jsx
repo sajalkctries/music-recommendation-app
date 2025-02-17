@@ -47,7 +47,7 @@ function ProductList() {
           <img src={item.image} alt={item.name} className="w-12 h-12 object-cover rounded" />
           <span>{item.name}</span>
           <span>{item.artist}</span>
-          <span>${item.price}</span>
+          <span>Rs {item.price}</span>
           <span 
             className="cursor-pointer text-red-500 hover:text-red-700"
             onClick={() => handleDelete(item._id)}
