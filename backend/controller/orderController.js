@@ -14,6 +14,7 @@ const placeOrder = async (req, res) => {
 
     const userId = decoded.id;
 
+
     const newOrder = new Order({
       userId,
       items: req.body.items,
@@ -22,6 +23,7 @@ const placeOrder = async (req, res) => {
       address: req.body.address,
     });
 
+    
     await newOrder.save();
     await User.findByIdAndUpdate(userId, { cartData: {} });
 
@@ -31,6 +33,7 @@ const placeOrder = async (req, res) => {
     return res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 };
+
 
 const getAllOrders = async (req, res) => {
   try {

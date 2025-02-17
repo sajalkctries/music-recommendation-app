@@ -1,14 +1,14 @@
 import { useState, useContext, useEffect, useMemo } from "react";
-import axios from "axios";
+// import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import CryptoJS from "crypto-js";
 import { StoreContext } from "../Components/Context/StoreContext";
 
-const BACKEND_URL = "http://localhost:4000/api/order/place";
+// const BACKEND_URL = "http://localhost:4000/api/order/place";
 const ESEWA_URL = "https://rc-epay.esewa.com.np/api/epay/main/v2/form";
 
 function PlaceOrder() {
-  const { cart, username, token } = useContext(StoreContext);
+  const { cart, username } = useContext(StoreContext);
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
   const secretKey = "8gBm/:&EnhH.1/q";
@@ -52,40 +52,22 @@ function PlaceOrder() {
   };
 
   // Handle Order Submission
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
+  
     if (!address || !username || Object.keys(cart).length === 0) {
       alert("Please fill all fields and add items to cart.");
       return;
     }
-
-    try {
-      const response = await axios.post(
-        BACKEND_URL,
-        {
-          items: Object.values(cart).map((item) => ({
-            name: item.name,
-            price: item.price,
-            quantity: item.quantity,
-          })),
-          amount: totalAmount,
-          address,
-          phone,
-        },
-        { headers: { token } }
-      );
-
-      if (response.status === 200) {
-        document.getElementById("esewaForm").submit(); // ✅ Correct form submission
-      } else {
-        alert("Order failed. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Something went wrong.");
-    }
+  
+    // Attach address and phone to data object (so we can use it later in PaymentSuccess)
+    localStorage.setItem("phone",phone);
+    localStorage.setItem("address",address)
+  
+    // Submit to eSewa
+    document.getElementById("esewaForm").submit();
   };
+  
 
   return (
     <div className="p-6 max-w-lg mx-auto bg-white rounded-lg shadow-md">

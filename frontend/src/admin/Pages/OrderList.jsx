@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import {toast} from 'react-toastify';
+import { toast } from "react-toastify";
 
 const ADMIN_URL = "http://localhost:4000/api/order"; // Update with your API URL
 
@@ -53,53 +53,64 @@ function OrderList() {
   };
 
   return (
-    <div className="p-6 max-w-4xl mx-auto bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-semibold mb-4">Admin Orders</h2>
+    <div className="p-6 max-w-5xl mx-auto bg-white rounded-lg shadow-md">
+      <h2 className="text-2xl font-semibold mb-4 text-center">Admin Orders</h2>
+      
       {loading ? (
-        <p>Loading orders...</p>
+        <div className="text-center py-4">Loading orders...</div>
       ) : (
-        <table className="min-w-full bg-white">
-          <thead>
-            <tr className="border-b">
-              <th className="px-4 py-2 text-left">Phone</th>
-              <th className="px-4 py-2 text-left">Username</th>
-              <th className="px-4 py-2 text-left">Total</th>
-              <th className="px-4 py-2 text-left">Address</th>
-              <th className="px-4 py-2 text-left">Status</th>
-              <th className="px-4 py-2 text-left">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orders.map((order) => (
-              <tr key={order._id} className="border-b">
-                <td className="px-4 py-2">{order.phone}</td>
-                <td className="px-4 py-2">{order.userId.name}</td> {/* Accessing userId.username */}
-                <td className="px-4 py-2">Rs {order.amount}</td>
-                <td className="px-4 py-2">{order.address}</td>
-                <td className="px-4 py-2">
-                  <select
-                    value={order.status}
-                    onChange={(e) =>
-                      updateOrderStatus(order._id, e.target.value)
-                    }
-                    className="px-2 py-1 border rounded"
-                  >
-                    <option value="Delivering">Delivering</option>
-                    <option value="Delivered">Delivered</option>
-                  </select>
-                </td>
-                <td className="px-4 py-2">
-                  <button
-                    onClick={() => deleteOrder(order._id)}
-                    className="px-4 py-2 bg-red-500 text-white rounded"
-                  >
-                    Delete
-                  </button>
-                </td>
+        <div className="overflow-x-auto">
+          <table className="min-w-full bg-white border border-gray-200">
+            <thead className="bg-gray-100">
+              <tr className="border-b text-sm">
+                <th className="px-4 py-2 text-left whitespace-nowrap">Phone</th>
+                <th className="px-4 py-2 text-left whitespace-nowrap">Username</th>
+                <th className="px-4 py-2 text-left whitespace-nowrap">Total</th>
+                <th className="px-4 py-2 text-left whitespace-nowrap">Address</th>
+                <th className="px-4 py-2 text-left whitespace-nowrap">Status</th>
+                <th className="px-4 py-2 text-left whitespace-nowrap">Items</th>
+                <th className="px-4 py-2 text-left whitespace-nowrap">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {orders.map((order) => (
+                <tr key={order._id} className="border-b text-sm">
+                  <td className="px-4 py-2">{order.phone}</td>
+                  <td className="px-4 py-2">{order.userId.name}</td>
+                  <td className="px-4 py-2">Rs {order.amount}</td>
+                  <td className="px-4 py-2">{order.address}</td>
+                  <td className="px-4 py-2">
+                    <select
+                      value={order.status}
+                      onChange={(e) => updateOrderStatus(order._id, e.target.value)}
+                      className="px-2 py-1 border rounded w-full md:w-auto"
+                    >
+                      <option value="Processing">Processing</option>
+                      <option value="Delivering">Delivering</option>
+                      <option value="Delivered">Delivered</option>
+                      <option value="Shipping">Shipping</option>
+                    </select>
+                  </td>
+                  <td className="px-4 py-2">
+                    {order.items.map((item) => (
+                      <div key={item.name}>
+                        {item.name} X {item.quantity}
+                      </div>
+                    ))}
+                  </td>
+                  <td className="px-4 py-2">
+                    <button
+                      onClick={() => deleteOrder(order._id)}
+                      className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
