@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate,Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import eye icons
+import {toast} from "react-toastify"
 
 const Register = () => {
   const url = "http://localhost:4000/api/user";
@@ -32,6 +33,10 @@ const Register = () => {
       setError("Password Should be at least 8 characters long")
       return;
     }
+    if(!/^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/.test(email)    ){
+      setError("Please enter proper email")
+      return;
+    }
     if (/\d/.test(name)) {
       setError("Name cannot contain numbers");
       return;
@@ -49,6 +54,7 @@ const Register = () => {
         setEmail("");
         setPassword("");
         setConfirmPassword("");
+       toast.success("Registration Successful")
       } else {
         setError(response.data.message || "Registration failed");
       }

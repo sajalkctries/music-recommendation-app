@@ -55,8 +55,6 @@ const getOrderById = async (req, res) => {
     if (!decoded) return res.status(401).json({ success: false, message: "Invalid token" });
 
     const userId = decoded.id;
-    console.log("Decoded User ID:", userId); // Log userId for debugging
-
     const orders = await Order.find({ userId }).sort({ createdAt: -1 });
     if (!orders) {
       console.log("No orders found for user:", userId); // Log if no orders are returned

@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { StoreContext } from "../Context/StoreContext";
+import {toast} from "react-toastify"
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import icons
 
 const Login = () => {
@@ -31,9 +32,10 @@ const Login = () => {
         localStorage.setItem("username", username);
         setToken(token);
         setUsername(username);
+        toast.success("Login Successful")
         navigate("/");
       } else {
-        setError(response.data.message);
+        setError("Credentials Doesn't match");
       }
     } catch (error) {
       console.error("Login error:", error);
