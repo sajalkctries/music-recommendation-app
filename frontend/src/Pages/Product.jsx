@@ -134,6 +134,10 @@ const Product = () => {
 
           <button
             onClick={() => {
+              if(!token){
+                toast.error('Login First');
+                return
+              }
               addToCart(id);
               toast.success("Product Added to Cart");
             }}
