@@ -5,7 +5,7 @@ import CryptoJS from "crypto-js";
 import { StoreContext } from "../Components/Context/StoreContext";
 
 // const BACKEND_URL = "http://localhost:4000/api/order/place";
-const url = 'http://localhost:5173/'
+const url = 'https://music-recommendation-app-1-3sro.onrender.com/'
 const ESEWA_URL = "https://rc-epay.esewa.com.np/api/epay/main/v2/form";
 
 function PlaceOrder() {
