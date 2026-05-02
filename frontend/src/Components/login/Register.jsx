@@ -5,7 +5,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import eye icons
 import {toast} from "react-toastify"
 
 const Register = () => {
-  const url = "http://localhost:4000/api/user";
+  const url = "https://music-recommendation-app-4xz4.onrender.com/api/user";
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
