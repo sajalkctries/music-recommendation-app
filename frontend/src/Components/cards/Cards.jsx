@@ -47,7 +47,7 @@ function Cards({ search }) {
     <div className="grid place-items-center sm:grid-cols-2 lg:grid-cols-3 gap-5 md:px-10">
       {filteredData.length > 0 ? (
         filteredData.map((item) => (
-          <Link key={item._id} to={`https://music-recommendation-app-4xz4.onrender.com/product/${item._id}`}>
+          <Link key={item._id} to={`https://music-recommendation-app-1-3sro.onrender.com/product/${item._id}`}>
             <Card
               _id={item._id}
               name={item.name}
