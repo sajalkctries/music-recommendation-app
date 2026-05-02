@@ -5,7 +5,7 @@ import axios from "axios";
 
 
 export const StoreContext = createContext(null);
-const url = "http://localhost:4000";
+const url = "https://music-recommendation-app-4xz4.onrender.com";
 
 const StoreContextProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
