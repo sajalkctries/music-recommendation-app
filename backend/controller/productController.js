@@ -80,7 +80,7 @@ export const getProductById = async (req, res) => {
         // Ensure the correct image path is sent
         res.status(200).json({
             ...product._doc,
-            image: product.image ? `http://localhost:4000/uploads/${product.image}` : "",
+            image: product.image ? `https://music-recommendation-app-1-3sro.onrender.com/uploads/${product.image}` : "",
         });
     } catch (error) {
         res.status(500).json({ message: "Server Error", error: error.message });
