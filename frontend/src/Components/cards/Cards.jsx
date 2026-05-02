@@ -8,6 +8,8 @@ function Cards({ search }) {
   const [data, setData] = useState([]);
   const url = "https://music-recommendation-app-4xz4.onrender.com"
 
+  
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -31,6 +33,8 @@ function Cards({ search }) {
       </div>
     );
   }
+
+  console.log(item.image)
 
   // Filter products based on search query (case-insensitive)
   const filteredData = data.filter(
