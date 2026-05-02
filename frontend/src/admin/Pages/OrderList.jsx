@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const ADMIN_URL = "http://localhost:4000/api/order"; // Update with your API URL
+const ADMIN_URL = "https://music-recommendation-app-4xz4.onrender.com/api/order"; // Update with your API URL
 
 function OrderList() {
   const [orders, setOrders] = useState([]);
