@@ -4,7 +4,7 @@ import axios from "axios";
 import { StoreContext } from "../Components/Context/StoreContext";
 import {toast} from 'react-toastify'
 
-const BACKEND_URL = "http://localhost:4000/api/order/place";
+const BACKEND_URL = "https://music-recommendation-app-4xz4.onrender.com/api/order/place";
 
 function PaymentSuccess() {
   const [search] = useSearchParams();
