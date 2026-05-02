@@ -15,7 +15,7 @@ const Product = () => {
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
   const [reviews, setReviews] = useState([]);
-  const url = 'hhttps://music-recommendation-app-4xz4.onrender.com/'
+  const url = 'https://music-recommendation-app-4xz4.onrender.com/'
 
   const { addToCart, token } = useContext(StoreContext);
 
