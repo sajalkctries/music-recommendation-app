@@ -9,7 +9,7 @@ function Personalisation() {
   const [recommendedProducts, setRecommendedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const url = "http://localhost:4000/"
+  const url = "https://music-recommendation-app-4xz4.onrender.com/"
   useEffect(() => {
     const fetchRecommendations = async () => {
       if (!token) return;
