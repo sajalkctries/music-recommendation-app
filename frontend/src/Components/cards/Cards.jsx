@@ -42,7 +42,7 @@ function Cards({ search }) {
       item.artist.toLowerCase().includes(search.toLowerCase().trim())
   );
 
-  console.log(filteredData)
+  console.log("hi",filteredData)
   return (
     <div className="grid place-items-center sm:grid-cols-2 lg:grid-cols-3 gap-5 md:px-10">
       {filteredData.length > 0 ? (
