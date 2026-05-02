@@ -40,7 +40,7 @@ export const getProducts = async (req, res) => {
         // Modify image paths to be full URLs
         const updatedProducts = products.map(product => ({
             ...product._doc,
-            image: product.image ? `http://localhost:4000/uploads/${product.image}` : "",
+            image: product.image ? `https://music-recommendation-app-4xz4.onrender.com/uploads/${product.image}` : "",
         }));
 
 
