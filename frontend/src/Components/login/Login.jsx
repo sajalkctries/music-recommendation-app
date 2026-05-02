@@ -6,7 +6,7 @@ import {toast} from "react-toastify"
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import icons
 
 const Login = () => {
-  const url = "http://localhost:4000/api/user";
+  const url = "https://music-recommendation-app-4xz4.onrender.com/api/user";
   const navigate = useNavigate();
   const { setToken, setUsername } = useContext(StoreContext);
   const [email, setEmail] = useState("");
