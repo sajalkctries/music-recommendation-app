@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 
 function ProductList() {
   const [data, setData] = useState([]);
-  const url = 'http://localhost:4000/'
+  const url = 'https://music-recommendation-app-4xz4.onrender.com/'
 
   useEffect(() => {
     const fetchProducts = async () => {
