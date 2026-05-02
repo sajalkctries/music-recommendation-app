@@ -34,7 +34,6 @@ function Cards({ search }) {
     );
   }
 
-  console.log(item.image)
 
   // Filter products based on search query (case-insensitive)
   const filteredData = data.filter(
