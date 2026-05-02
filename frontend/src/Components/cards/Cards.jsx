@@ -6,12 +6,13 @@ import Card from "./Card";
 
 function Cards({ search }) {
   const [data, setData] = useState([]);
+  const url = "http://localhost:4000"
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:4000/api/products/list"
+          `${url}/api/products/list`
         );
         setData(response.data);
       } catch (error) {

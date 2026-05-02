@@ -15,6 +15,7 @@ const Product = () => {
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
   const [reviews, setReviews] = useState([]);
+  const url = 'http://localhost:4000/'
 
   const { addToCart, token } = useContext(StoreContext);
 
@@ -22,7 +23,7 @@ const Product = () => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/api/products/${id}`
+          `${url}api/products/${id}`
         );
         setProduct(response.data);
         console.log(product);
@@ -40,7 +41,7 @@ const Product = () => {
     const fetchReviews = async () => {
       try {
         const response = await fetch(
-          `http://localhost:4000/api/review/product/${id}`,
+          `${url}api/review/product/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`, // Ensure token is sent
@@ -79,7 +80,7 @@ const Product = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/review/add",
+        `${url}api/review/add`,
         { productId: id, rating: parsedRating, comment: review },
         { headers: { Authorization: `Bearer ${token}` } }
       );

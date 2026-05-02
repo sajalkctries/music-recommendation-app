@@ -5,6 +5,7 @@ import CryptoJS from "crypto-js";
 import { StoreContext } from "../Components/Context/StoreContext";
 
 // const BACKEND_URL = "http://localhost:4000/api/order/place";
+const url = 'http://localhost:5173/'
 const ESEWA_URL = "https://rc-epay.esewa.com.np/api/epay/main/v2/form";
 
 function PlaceOrder() {
@@ -33,8 +34,8 @@ function PlaceOrder() {
     product_service_charge: "0",
     product_delivery_charge: "0",
     product_code: "EPAYTEST",
-    success_url: "http://localhost:5173/paymentsuccess",
-    failure_url: "http://localhost:5173/paymentfailure",
+    success_url: `${url}paymentsuccess`,
+    failure_url: `${url}paymentfailure`,
     signed_field_names: "total_amount,transaction_uuid,product_code",
     signature: "",
   });

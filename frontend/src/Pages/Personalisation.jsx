@@ -9,7 +9,7 @@ function Personalisation() {
   const [recommendedProducts, setRecommendedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
+  const url = "http://localhost:4000/"
   useEffect(() => {
     const fetchRecommendations = async () => {
       if (!token) return;
@@ -17,7 +17,7 @@ function Personalisation() {
       try {
         setLoading(true);
         const response = await axios.get(
-          "http://localhost:4000/api/user/recommended",
+          `${url}api/user/recommended`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -64,7 +64,7 @@ function Personalisation() {
                 _id={item._id}
                 name={item.name}
                 artist={item.artist}
-                image={`http://localhost:4000/uploads/${item.image}`}
+                image={`${url}uploads/${item.image}`}
                 price={item.price}
                 genre={item.genre}
                 releaseYear={item.releaseYear}

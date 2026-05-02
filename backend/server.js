@@ -9,7 +9,7 @@ import userRouter from "./routes/userRoute.js";
 import cartRouter from "./routes/cartRoute.js";
 import orderRouter from "./routes/orderRoute.js";
 
-dotenv.config(); // Load environment variables
+dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 4000;

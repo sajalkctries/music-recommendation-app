@@ -4,11 +4,12 @@ import { toast } from "react-toastify";
 
 function ProductList() {
   const [data, setData] = useState([]);
+  const url = 'http://localhost:4000/'
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/api/products/list");
+        const response = await axios.get(`${url}api/products/list`);
         setData(response.data);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -20,7 +21,7 @@ function ProductList() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/api/products/delete/${id}`);
+      await axios.delete(`${url}api/products/delete/${id}`);
       setData((prevData) => prevData.filter((item) => item._id !== id));
       toast.success("Product deleted successfully");
     } catch (error) {
