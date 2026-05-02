@@ -4,7 +4,7 @@ import { miscImages } from "../../assets/assets";
 import axios from "axios";
 
 function AddItems() {
-  const url = "http://localhost:4000";
+  const url = "https://music-recommendation-app-4xz4.onrender.com";
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [image, setImage] = useState(false);
   const [data, setData] = useState({
