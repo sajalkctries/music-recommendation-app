@@ -29,7 +29,7 @@ function Cards({ search }) {
   if (data.length === 0) {
     return (
       <div className="text-center text-red-500">
-        Server Down. Please wait a while
+        Awaiting response from server. Please wait a while
       </div>
     );
   }
